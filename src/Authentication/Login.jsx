@@ -13,7 +13,7 @@ const Login = () => {
     const user = { email, password };
 
     try {
-      const res = await axios.post('http://localhost:5000/api/authentication', user);
+      const res = await axios.post('http://localhost:5000/api/authentication/login', user);
       console.log('Login success:', res.data);
     } catch (err) {
       console.log(err);
