@@ -10,33 +10,50 @@ const TraineeDashboard = () => {
   const [todayExercises, setTodayExercises] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [allExercises, setAllExercises] = useState([]);
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const today = daysOfWeek[new Date().getDay()];
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      if (!user?.id) return;
+  const fetchDashboardData = async () => {
+    if (!user?.id) return;
 
-      setLoading(true);
-      try {
-        const profileRes = await axios.get(`http://localhost:5000/api/users/${user.id}`);
-        setProfile(profileRes.data);
+    setLoading(true);
+    try {
+      const profileRes = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+      setProfile(profileRes.data);
 
-        const exercisesRes = await axios.get(`http://localhost:5000/api/users/${user.id}/workouts`);
-        const allExercises = exercisesRes.data;
+      const exercisesRes = await axios.get(`http://localhost:5000/api/users/${user.id}/workouts`);
+      const allBackendExercises = exercisesRes.data;
 
-        setTodayExercises(allExercises[today] || []);
+      const todayExercisesRaw = allBackendExercises[today] || [];
+      const exercisesDBRes = await axios.get('https://exercisedb.p.rapidapi.com/exercises?limit=1300', {
+        headers: {
+          'x-rapidapi-key': '913ede5fc5msh7af032301d58484p138028jsnf2b34e55bd24',
+          'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+        }
+      });
+      setAllExercises(exercisesDBRes.data);
 
-      } catch (err) {
-        console.error('Error fetching dashboard data:', err);
-        setError('Failed to load dashboard data.');
-      }
-      setLoading(false);
-    };
+      const enrichedToday = todayExercisesRaw.map((ex) => {
+        const match = exercisesDBRes.data.find(
+          (e) => e.name.toLowerCase() === ex.name?.toLowerCase()
+        );
+        return { ...ex, gifUrl: match?.gifUrl || null };
+      });
 
-    fetchDashboardData();
-  }, [user, today]);
+      setTodayExercises(enrichedToday);
+    } catch (err) {
+      console.error('Error fetching dashboard data:', err);
+      setError('Failed to load dashboard data.');
+    }
+    setLoading(false);
+  };
+
+  fetchDashboardData();
+}, [user, today]);
+
 
   if (loading) {
     return <div className="trainee-dashboard-loading">Loading dashboard...</div>;
@@ -66,11 +83,16 @@ const TraineeDashboard = () => {
           {todayExercises.length > 0 ? (
             <ul className="trainee-dashboard-exercises">
               {todayExercises.map((exercise, index) => (
-                <li key={index} className="trainee-dashboard-exercise-item">
-                  <span className="trainee-dashboard-exercise-icon"></span>
-                  <span className="trainee-dashboard-exercise-name">{exercise.name}</span>
-                </li>
-              ))}
+              <li key={index} className="trainee-dashboard-exercise-item">
+                <img
+                  src={exercise.gifUrl || 'https://via.placeholder.com/60'}
+                  alt={exercise.name}
+                  className="trainee-dashboard-exercise-gif"
+                  style={{ width: '60px', height: '60px', marginRight: '10px', objectFit: 'contain' }}
+                />
+                <span className="trainee-dashboard-exercise-name">{exercise.name}</span>
+              </li>
+            ))}
             </ul>
           ) : (
             <p>No exercises planned for today.</p>
