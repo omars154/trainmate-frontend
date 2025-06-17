@@ -1,0 +1,217 @@
+.te-container {
+  padding: 32px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.te-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #23223a;
+  margin-bottom: 18px;
+}
+.te-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+}
+.te-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.te-card:hover {
+  box-shadow: 0 6px 32px rgba(108, 62, 245, 0.10);
+  transform: translateY(-2px) scale(1.02);
+}
+.te-day {
+  margin: 0 0 14px 0;
+  font-size: 1.2rem;
+  color: #6c3ef5;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.te-exercise-list {
+  flex: 1;
+}
+.te-exercise {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 14px;
+  background: #f6f8fb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 4px rgba(108, 62, 245, 0.03);
+}
+.te-ex-gif {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f6f8fb;
+  border: 1px solid #ececec;
+}
+.te-ex-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.te-ex-name {
+  font-weight: 600;
+  color: #23223a;
+  font-size: 1.05rem;
+}
+.te-ex-target {
+  font-size: 0.97rem;
+  color: #6c3ef5;
+  font-weight: 500;
+}
+.te-ex-equip {
+  font-size: 0.93rem;
+  color: #888;
+}
+.te-empty {
+  color: #aaa;
+  font-size: 1rem;
+  margin-top: 12px;
+  text-align: center;
+}
+.te-loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+  color: #6c3ef5;
+}
+.te-error {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: #ef4444;
+}
+@media (max-width: 700px) {
+  .te-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .te-card {
+    padding: 16px 8px;
+  }
+  .te-title {
+    font-size: 1.3rem;
+  }
+}
+.te-container {
+    padding: 32px 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .te-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #23223a;
+    margin-bottom: 18px;
+  }
+  .te-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    margin-top: 24px;
+  }
+  .te-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .te-card:hover {
+    box-shadow: 0 6px 32px rgba(108, 62, 245, 0.10);
+    transform: translateY(-2px) scale(1.02);
+  }
+  .te-day {
+    margin: 0 0 14px 0;
+    font-size: 1.2rem;
+    color: #6c3ef5;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .te-exercise-list {
+    flex: 1;
+  }
+  .te-exercise {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 14px;
+    background: #f6f8fb;
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 1px 4px rgba(108, 62, 245, 0.03);
+  }
+  .te-ex-gif {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f6f8fb;
+    border: 1px solid #ececec;
+  }
+  .te-ex-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .te-ex-name {
+    font-weight: 600;
+    color: #23223a;
+    font-size: 1.05rem;
+  }
+  .te-ex-target {
+    font-size: 0.97rem;
+    color: #6c3ef5;
+    font-weight: 500;
+  }
+  .te-ex-equip {
+    font-size: 0.93rem;
+    color: #888;
+  }
+  .te-empty {
+    color: #aaa;
+    font-size: 1rem;
+    margin-top: 12px;
+    text-align: center;
+  }
+  .te-loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #6c3ef5;
+  }
+  .te-error {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.1rem;
+    color: #ef4444;
+  }
+  @media (max-width: 700px) {
+    .te-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .te-card {
+      padding: 16px 8px;
+    }
+    .te-title {
+      font-size: 1.3rem;
+    }
+  }
+  

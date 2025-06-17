@@ -1,0 +1,131 @@
+import React, { useState } from 'react';
+import './Signup.css';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import SignupImg from '../Images/SignUpImg.png';
+
+const Signup = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('trainee');
+  const [agree, setAgree] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    if (!agree) {
+      alert('You must agree to the terms and privacy policy');
+      return;
+    }
+    try {
+      const endpoint =
+        role === 'trainee'
+          ? 'http://localhost:5000/api/trainees/register'
+          : 'http://localhost:5000/api/coaches/register';
+
+      const res = await axios.post(endpoint, {
+        name,
+        email,
+        password,
+      });
+
+      alert('Signup successful!');
+      navigate('/login');
+    } catch (err) {
+      console.error('Signup error:', err);
+      alert('Signup failed. Check console.');
+    }
+  };
+
+  return (
+    <div className="signup-container">
+      <div className="signup-left">
+        <div className="signup-logo-row">
+          <div className="signup-logo-placeholder">40 × 40</div>
+          <h1 className="signup-logo-text">TrainMate</h1>
+        </div>
+        <h1 className="signup-title">Create your account</h1>
+        <p className="signup-subtitle">Join thousands of coaches and trainees on the platform</p>
+        <form className="signup-form" onSubmit={handleSignup}>
+          <label htmlFor="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <select value={role} onChange={(e) => setRole(e.target.value)} style={{ display: 'none' }}>
+            <option value="trainee">Trainee</option>
+            <option value="trainer">Trainer</option>
+          </select>
+          <div className="signup-terms-row">
+            <input
+              type="checkbox"
+              id="agree"
+              checked={agree}
+              onChange={(e) => setAgree(e.target.checked)}
+              required
+            />
+            <label htmlFor="agree" className="signup-terms-label">
+              I agree to the <a href="#" className="signup-link">Terms of Service</a>
+              and <a href="#" className="signup-link">Privacy Policy</a>
+            </label>
+          </div>
+          <button type="submit" className="signup-btn">Create Account</button>
+        </form>
+        <div className="signup-signin-row">
+          <span>Already have an account?</span>
+          <Link to="/login" className="signup-signin-link">Sign in</Link>
+        </div>
+      </div>
+      <div className="signup-right">
+        <div className="signup-image-card">
+          <img src={SignupImg} alt="Signup" className="signup-image" />
+          <div className="signup-image-text">
+            <div className="signup-image-title">Transform Your Training Journey</div>
+            <div className="signup-image-desc">
+              Access powerful tools for scheduling, tracking, and communication. Take your training to the next level with TrainMate's comprehensive platform.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Signup;

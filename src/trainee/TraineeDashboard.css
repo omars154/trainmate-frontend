@@ -1,0 +1,181 @@
+.trainee-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.trainee-dashboard-header h1 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 700;
+}
+
+.trainee-dashboard-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 25px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.trainee-dashboard-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  transition: transform 0.2s ease-in-out;
+}
+
+.trainee-dashboard-card:hover {
+  transform: translateY(-5px);
+}
+
+.trainee-dashboard-card h2 {
+  color: #34495e;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.trainee-dashboard-workout-summary {
+  grid-column: span 1;
+  justify-content: space-between;
+}
+
+.trainee-dashboard-workout-status {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.trainee-dashboard-button {
+  background-color: #6a0dad;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: auto;
+}
+
+.trainee-dashboard-button:hover {
+  background-color: #5a0ca0;
+  transform: translateY(-2px);
+}
+
+.trainee-dashboard-exercise-list {
+  grid-column: span 1;
+}
+
+.trainee-dashboard-exercises {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.trainee-dashboard-exercise-item {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.trainee-dashboard-exercise-icon {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 6px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.trainee-dashboard-exercise-name {
+  font-size: 1.1em;
+  color: #333;
+  font-weight: 500;
+}
+
+.trainee-dashboard-coach-info {
+  grid-column: span 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.trainee-dashboard-coach-info h2 {
+  margin-bottom: 10px;
+}
+
+.trainee-dashboard-coach-name {
+  font-size: 1.6em;
+  color: #6a0dad;
+  font-weight: 700;
+}
+
+.trainee-dashboard-loading,
+.trainee-dashboard-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  font-size: 1.2em;
+  color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .trainee-dashboard-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .trainee-dashboard-header h1 {
+    font-size: 1.8em;
+  }
+
+  .trainee-dashboard-card {
+    padding: 20px;
+  }
+
+  .trainee-dashboard-card h2 {
+    font-size: 1.3em;
+  }
+
+  .trainee-dashboard-button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+
+  .trainee-dashboard-exercise-item {
+    padding: 12px;
+  }
+
+  .trainee-dashboard-exercise-icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .trainee-dashboard-exercise-name {
+    font-size: 1em;
+  }
+
+  .trainee-dashboard-coach-name {
+    font-size: 1.4em;
+  }
+} 
