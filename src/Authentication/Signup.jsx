@@ -23,6 +23,7 @@ const Signup = () => {
       alert('You must agree to the terms and privacy policy');
       return;
     }
+
     try {
       const endpoint =
         role === 'trainee'
@@ -89,10 +90,17 @@ const Signup = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-          <select value={role} onChange={(e) => setRole(e.target.value)} style={{ display: 'none' }}>
+          <label htmlFor="role">Sign up as:</label>
+          <select
+            id="role"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="signup-role-dropdown"
+          >
             <option value="trainee">Trainee</option>
-            <option value="trainer">Trainer</option>
+            <option value="trainer">Coach / Trainer</option>
           </select>
+
           <div className="signup-terms-row">
             <input
               type="checkbox"
