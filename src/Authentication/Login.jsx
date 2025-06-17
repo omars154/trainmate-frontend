@@ -11,47 +11,38 @@ const Login = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+    const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(`http://localhost:5000/api/users/by-email/${encodeURIComponent(email)}`);
+      const res = await axios.post('http://localhost:5000/api/users/login', {
+        email,
+        password
+      });
       const user = res.data;
-  
-      if (user.password !== password) {
+
+      if (user.error) {
         alert('Invalid credentials');
         return;
       }
-  
-      // Save user info locally
+
       localStorage.setItem('user_id', user.id);
       localStorage.setItem('role', user.role);
-      localStorage.setItem('user_email', user.email);
-      localStorage.setItem('user_name', user.name); // ← Add this after login success
+      localStorage.setItem('user_email', email);
+      localStorage.setItem('user_name', user.name);
 
       setUser({
         id: user.id,
         role: user.role,
-        email: user.email,
+        email,
         name: user.name,
       });
 
-  
-      alert('Login successful!');
-  
-      // Redirect based on role
-      if (user.role === 'trainee') {
-        navigate('/trainee/dashboard');
-      } else if (user.role === 'trainer') {
-        navigate('/trainer/dashboard');
-      } else {
-        navigate('/');
-      }
+      navigate(user.role === 'trainee' ? '/trainee/dashboard' : '/trainer/dashboard');
     } catch (err) {
-      console.error('Login error:', err);
+      console.log('Login error:', err);
       alert('Login failed: User not found or server error.');
     }
   };
-  
 
   return (
     <div className="login-container">

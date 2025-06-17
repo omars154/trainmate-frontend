@@ -9,13 +9,12 @@ const daysOfWeek = [
 export default function TraineeExercises({ userId }) {
   const [workouts, setWorkouts] = useState({});
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [exerciseDB, setExerciseDB] = useState([]);
 
     useEffect(() => {
     async function fetchWorkouts() {
       setLoading(true);
-      setError(null);
+
       try {
         const res = await axios.get(`http://localhost:5000/api/users/${userId}/workouts`);
         const workoutData = res.data;
@@ -26,25 +25,31 @@ export default function TraineeExercises({ userId }) {
             'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
           }
         });
+
         const exerciseData = dbRes.data;
         setExerciseDB(exerciseData);
 
         const enrichedWorkouts = {};
-        for (const day in workoutData) {
-          enrichedWorkouts[day] = workoutData[day].map((ex) => {
-            const match = exerciseData.find(e => e.name.toLowerCase() === ex.name?.toLowerCase());
+
+        for (let day in workoutData) {
+          enrichedWorkouts[day] = workoutData[day].map(function (exercise) {
+            const match = exerciseData.find(function (e) {
+              return e.name && exercise.name && e.name.toLowerCase() === exercise.name.toLowerCase();
+            });
+
             return {
-              ...ex,
-              gifUrl: match?.gifUrl || null
+              ...exercise,
+              gifUrl: match ? match.gifUrl : null
             };
           });
         }
 
         setWorkouts(enrichedWorkouts);
       } catch (err) {
-        setError('Failed to load your workout plan.');
+        console.log('Failed to fetch workouts:', err);
         setWorkouts({});
       }
+
       setLoading(false);
     }
 
@@ -55,8 +60,6 @@ export default function TraineeExercises({ userId }) {
 
 
   if (loading) return <div className="te-loading">Loading your workout plan...</div>;
-  if (error) return <div className="te-error">{error}</div>;
-
   return (
     <div className="te-container">
       <h2 className="te-title">Your Weekly Workout Plan</h2>
@@ -67,27 +70,21 @@ export default function TraineeExercises({ userId }) {
             <div className="te-exercise-list">
               {(workouts[day] && workouts[day].length > 0) ? (
                 workouts[day]
-                  .filter(ex => ex.name)
-                  .map((ex, idx) => (
+                  .filter(exercise => exercise.name)
+                  .map((exercise, idx) => (
                     <div className="te-exercise" key={idx}>
-                      {ex.gifUrl && (
+                      {exercise.gifUrl && (
                         <img
-                          src={ex.gifUrl}
-                          alt={ex.name}
+                          src={exercise.gifUrl}
+                          alt={exercise.name}
                           className="te-ex-img"
-                          style={{
-                            width: '80px',
-                            height: '80px',
-                            objectFit: 'contain',
-                            marginBottom: '10px'
-                          }}
                         />
                       )}
                       <div className="te-ex-info">
-                        <div className="te-ex-name"><strong>{ex.name}</strong></div>
-                        <div className="te-ex-body">Body Part: {ex.body_part}</div>
-                        <div className="te-ex-equip">Equipment: {ex.equipment}</div>
-                        <div className="te-ex-target">Target: {ex.target}</div>
+                        <div className="te-ex-name"><strong>{exercise.name}</strong></div>
+                        <div className="te-ex-body">Body Part: {exercise.body_part}</div>
+                        <div className="te-ex-equip">Equipment: {exercise.equipment}</div>
+                        <div className="te-ex-target">Target: {exercise.target}</div>
                       </div>
                     </div>
                   ))

@@ -15,6 +15,12 @@
   gap: 28px;
   margin-top: 24px;
 }
+.te-ex-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
 .te-card {
   background: #fff;
   border-radius: 18px;

@@ -9,7 +9,6 @@ const TraineeDashboard = () => {
   const [profile, setProfile] = useState(null);
   const [todayExercises, setTodayExercises] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [allExercises, setAllExercises] = useState([]);
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -36,17 +35,14 @@ const TraineeDashboard = () => {
       });
       setAllExercises(exercisesDBRes.data);
 
-      const enrichedToday = todayExercisesRaw.map((ex) => {
-        const match = exercisesDBRes.data.find(
-          (e) => e.name.toLowerCase() === ex.name?.toLowerCase()
-        );
-        return { ...ex, gifUrl: match?.gifUrl || null };
-      });
-
+      const enrichedToday = todayExercisesRaw.map(exercise => ({
+      ...exercise,
+      gifUrl: exercisesDBRes.data.find(e => e.name.toLowerCase() === exercise.name.toLowerCase()).gifUrl
+      }));
+      
       setTodayExercises(enrichedToday);
     } catch (err) {
-      console.error('Error fetching dashboard data:', err);
-      setError('Failed to load dashboard data.');
+      console.log('Error fetching dashboard data:', err);
     }
     setLoading(false);
   };
@@ -54,13 +50,8 @@ const TraineeDashboard = () => {
   fetchDashboardData();
 }, [user, today]);
 
-
   if (loading) {
     return <div className="trainee-dashboard-loading">Loading dashboard...</div>;
-  }
-
-  if (error) {
-    return <div className="trainee-dashboard-error">{error}</div>;
   }
 
   return (
@@ -85,10 +76,9 @@ const TraineeDashboard = () => {
               {todayExercises.map((exercise, index) => (
               <li key={index} className="trainee-dashboard-exercise-item">
                 <img
-                  src={exercise.gifUrl || 'https://via.placeholder.com/60'}
+                  src={exercise.gifUrl}
                   alt={exercise.name}
                   className="trainee-dashboard-exercise-gif"
-                  style={{ width: '60px', height: '60px', marginRight: '10px', objectFit: 'contain' }}
                 />
                 <span className="trainee-dashboard-exercise-name">{exercise.name}</span>
               </li>

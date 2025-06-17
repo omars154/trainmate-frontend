@@ -24,6 +24,13 @@
   margin: 0 auto;
 }
 
+.trainee-dashboard-exercise-gif {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  object-fit: contain;
+
+}
 .trainee-dashboard-card {
   background-color: #ffffff;
   border-radius: 12px;

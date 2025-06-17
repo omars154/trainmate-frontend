@@ -11,9 +11,8 @@ export default function Profile() {
   const [form, setForm] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-
+  
   useEffect(() => {
     async function fetchUser() {
       if (!user?.id) return;
@@ -29,7 +28,7 @@ export default function Profile() {
           setCoaches(coachRes.data);
         }
       } catch (err) {
-        setError('Failed to load profile.');
+        console.log(err)
       }
       setLoading(false);
     }
@@ -44,14 +43,12 @@ export default function Profile() {
   const handleEdit = () => {
     setEditMode(true);
     setSuccess(null);
-    setError(null);
   };
 
   const handleCancel = () => {
     setEditMode(false);
     setForm(profile);
     setSuccess(null);
-    setError(null);
   };
 
   const handleSubmit = async e => {
@@ -59,7 +56,6 @@ export default function Profile() {
     if (!editMode) return;
 
     setSaving(true);
-    setError(null);
     setSuccess(null);
 
     try {
@@ -67,14 +63,13 @@ export default function Profile() {
       setProfile(form);
       setSuccess('Profile updated successfully!');
     } catch (err) {
-      setError('Failed to update profile.');
+      console.log(err)
     }
-
     setSaving(false);
+    
   };
 
   if (loading) return <div className="profile-loading">Loading profile...</div>;
-  if (!profile) return <div className="profile-error">{error || 'User not found.'}</div>;
 
   return (
     <div className="profile-page-container">
@@ -90,7 +85,7 @@ export default function Profile() {
             <div className="profile-group">
               <label className="profile-label">Name:</label>
               {editMode ? (
-                <input name="name" value={form.name || ''} onChange={handleChange} className="profile-input" />
+                <input name="name" value={form.name} onChange={handleChange} className="profile-input" />
               ) : (
                 <span className="profile-display-value">{profile.name}</span>
               )}
@@ -101,30 +96,30 @@ export default function Profile() {
                 <div className="profile-group">
                   <label className="profile-label">Height (cm):</label>
                   {editMode ? (
-                    <input name="height" type="number" value={form.height || ''} onChange={handleChange} className="profile-input" />
+                    <input name="height" type="number" value={form.height} onChange={handleChange} className="profile-input" />
                   ) : (
-                    <span className="profile-display-value">{profile.height || '- '}</span>
+                    <span className="profile-display-value">{profile.height}</span>
                   )}
                 </div>
                 <div className="profile-group">
                   <label className="profile-label">Weight (kg):</label>
                   {editMode ? (
-                    <input name="weight" type="number" value={form.weight || ''} onChange={handleChange} className="profile-input" />
+                    <input name="weight" type="number" value={form.weight} onChange={handleChange} className="profile-input" />
                   ) : (
-                    <span className="profile-display-value">{profile.weight || '- '}</span>
+                    <span className="profile-display-value">{profile.weight}</span>
                   )}
                 </div>
                 <div className="profile-group">
                   <label className="profile-label">Coach:</label>
                   {editMode ? (
-                    <select name="coach_id" value={form.coach_id || ''} onChange={handleChange} className="profile-select">
+                    <select name="coach_id" value={form.coach_id} onChange={handleChange} className="profile-select">
                       <option value="">Select coach</option>
-                      {coaches.map(c => (
-                        <option key={c.id} value={c.id}>{c.name}</option>
+                      {coaches.map(coach => (
+                        <option key={coach.id} value={coach.id}>{coach.name}</option>
                       ))}
                     </select>
                   ) : (
-                    <span className="profile-display-value">{profile.coach_name || '- '}</span>
+                    <span className="profile-display-value">{profile.coach_name}</span>
                   )}
                 </div>
               </>
@@ -134,9 +129,9 @@ export default function Profile() {
               <div className="profile-group">
                 <label className="profile-label">Phone:</label>
                 {editMode ? (
-                  <input name="phone" value={form.phone || ''} onChange={handleChange} className="profile-input" />
+                  <input name="phone" value={form.phone} onChange={handleChange} className="profile-input" />
                 ) : (
-                  <span className="profile-display-value">{profile.phone || '- '}</span>
+                  <span className="profile-display-value">{profile.phone}</span>
                 )}
               </div>
             )}
@@ -151,8 +146,6 @@ export default function Profile() {
                 <button type="button" onClick={handleEdit} className="profile-edit-btn">Edit Profile</button>
               )}
             </div>
-
-            {error && <div className="profile-message profile-error">{error}</div>}
             {success && <div className="profile-message profile-success">{success}</div>}
           </form>
         </div>

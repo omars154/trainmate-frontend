@@ -24,10 +24,7 @@ const Signup = () => {
       return;
     }
     try {
-      const endpoint =
-        role === 'trainee'
-          ? 'http://localhost:5000/api/trainees/register'
-          : 'http://localhost:5000/api/coaches/register';
+      const endpoint = role === 'trainee' ? 'http://localhost:5000/api/trainees/register':'http://localhost:5000/api/coaches/register';
 
       const res = await axios.post(endpoint, {
         name,

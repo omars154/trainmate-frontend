@@ -1,16 +1,13 @@
-import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { useUser } from '../utils/UserContext';
 import './TraineeNav.css';
 
 const TraineeNav = () => {
   const { logout } = useUser();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
   };
 
   return (
@@ -20,9 +17,9 @@ const TraineeNav = () => {
         <span>TrainMate</span>
       </div>
       <div className="nav-links">
-        <Link to="/trainee/dashboard" className={location.pathname === '/trainee/dashboard' ? 'active' : ''}>Dashboard</Link>
-        <Link to="/trainee/exercises" className={location.pathname === '/trainee/exercises' ? 'active' : ''}>Workouts</Link>
-        <Link to="/profile" className={location.pathname === '/profile' ? 'active' : ''}>Profile</Link>
+        <Link to="/trainee/dashboard">Dashboard</Link>
+        <Link to="/trainee/exercises">Workouts</Link>
+        <Link to="/profile">Profile</Link>
       </div>
       <div>
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
