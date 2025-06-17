@@ -139,7 +139,6 @@ export default function ManagingTrainees() {
     target: exercise.target
     };
 
-  
     try {
       setLoadingExercises(true);
   
@@ -298,18 +297,41 @@ export default function ManagingTrainees() {
                   <div className="mt-current-exercises-header">
                     <h4>Workout Plan for {selectedDay}</h4>
                   </div>
-                  {currentDayWorkouts.length > 0 ? (
-                    <ul className="mt-current-exercise-list">
-                      {currentDayWorkouts.map((exercise, index) => (
-                        <li key={index} className="mt-current-exercise-item">
-                          <div className="mt-current-exercise-info">
-                            <div className="mt-current-exercise-name">{exercise.name}</div>
-                            <div className="mt-current-exercise-details">{exercise.bodyPart} - {exercise.equipment}</div>
-                          </div>
-                          <button onClick={() => handleRemoveExercise(index)} className="mt-remove-btn">×</button>
-                        </li>
-                      ))}
-                    </ul>
+                   {currentDayWorkouts.length > 0 ? (
+                      <ul className="mt-current-exercise-list">
+                        {currentDayWorkouts
+                          .map((exercise) => {
+                            const match = allExercises.find(
+                              (e) => e.name.toLowerCase() === exercise.name?.toLowerCase()
+                            );
+                            return {
+                              ...exercise,
+                              gifUrl: match?.gifUrl || null
+                            };
+                          })
+                          .map((exercise, index) => (
+                            <li key={index} className="mt-current-exercise-item">
+                              <img
+                                src={exercise.gifUrl || 'https://via.placeholder.com/80'}
+                                alt={exercise.name}
+                                className="mt-exercise-img"
+                                style={{ width: '80px', height: '80px', marginRight: '10px', objectFit: 'contain' }}
+                              />
+                              <div className="mt-current-exercise-info">
+                                <div className="mt-current-exercise-name">{exercise.name}</div>
+                                <div className="mt-current-exercise-details">
+                                  {exercise.bodyPart} - {exercise.equipment}
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => handleRemoveExercise(index)}
+                                className="mt-remove-btn"
+                              >
+                                ×
+                              </button>
+                            </li>
+                          ))}
+                      </ul>
                   ) : (
                     <div className="mt-empty-results">No exercises assigned for {selectedDay}.</div>
                   )}
