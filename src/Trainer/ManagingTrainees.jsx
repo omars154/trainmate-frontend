@@ -132,12 +132,13 @@ export default function ManagingTrainees() {
     if (!selectedTrainee || !selectedDay) return;
   
     const newWorkoutExercise = {
-      exerciseId: exercise.id || exercise.exercise_id || exercise.name,
-      name: exercise.name,
-      bodyPart: exercise.bodyPart,
-      target: exercise.target,
-      equipment: exercise.equipment,
+    exerciseId: exercise.id,
+    exerciseName: exercise.name,
+    bodyPart: exercise.bodyPart,
+    equipment: exercise.equipment,
+    target: exercise.target
     };
+
   
     try {
       setLoadingExercises(true);
