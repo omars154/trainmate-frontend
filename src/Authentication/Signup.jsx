@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import './Signup.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -42,11 +43,19 @@ const Signup = () => {
     }
   };
 
+=======
+import React from 'react';
+import './Signup.css';
+import { Link } from 'react-router-dom';
+
+const Signup = () => {
+>>>>>>> origin/main
   return (
     <div className="signup-container">
       <div className="signup-left">
         <div className="signup-logo-row">
           <div className="signup-logo-placeholder">40 × 40</div>
+<<<<<<< HEAD
           <h1 className="signup-logo-text">TrainMate</h1>
         </div>
         <h1 className="signup-title">Create your account</h1>
@@ -105,16 +114,50 @@ const Signup = () => {
               and <a href="#" className="signup-link">Privacy Policy</a>
             </label>
           </div>
+=======
+          <span className="signup-logo-text">TrainMate</span>
+        </div>
+        <h1 className="signup-title">Create your account</h1>
+        <p className="signup-subtitle">Join thousands of coaches and trainees on the platform</p>
+        <form className="signup-form">
+          <label htmlFor="fullname">Full Name</label>
+          <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required />
+
+          <label htmlFor="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+          <label htmlFor="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required />
+
+          <div className="signup-terms-row">
+            <input type="checkbox" id="terms" name="terms" required />
+            <label htmlFor="terms" className="signup-terms-label">
+              I agree to the <a href="#" className="signup-link">Terms of Service</a> and <a href="#" className="signup-link">Privacy Policy</a>
+            </label>
+          </div>
+
+>>>>>>> origin/main
           <button type="submit" className="signup-btn">Create Account</button>
         </form>
         <div className="signup-signin-row">
           <span>Already have an account?</span>
+<<<<<<< HEAD
           <Link to="/login" className="signup-signin-link">Sign in</Link>
+=======
+          <Link to="/" className="signup-signin-link">Sign in</Link>
+>>>>>>> origin/main
         </div>
       </div>
       <div className="signup-right">
         <div className="signup-image-card">
+<<<<<<< HEAD
           <img src={SignupImg} alt="Signup" className="signup-image" />
+=======
+          <div className="signup-image-placeholder">420 × 280</div>
+>>>>>>> origin/main
           <div className="signup-image-text">
             <div className="signup-image-title">Transform Your Training Journey</div>
             <div className="signup-image-desc">
@@ -127,4 +170,8 @@ const Signup = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Signup;
+=======
+export default Signup; 
+>>>>>>> origin/main
