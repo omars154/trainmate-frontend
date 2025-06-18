@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './TraineeExercises.css';
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const daysOfWeek = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
@@ -16,7 +18,7 @@ export default function TraineeExercises({ userId }) {
       setLoading(true);
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${userId}/workouts`);
+        const res = await axios.get(`${BASE_URL}/trainee/${userId}/workouts`);
         const workoutData = res.data;
 
         const dbRes = await axios.get('https://exercisedb.p.rapidapi.com/exercises?limit=1300', {

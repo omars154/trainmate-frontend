@@ -4,7 +4,7 @@ import './ManagingTrainees.css';
 import { useUser } from '../utils/UserContext';
 import { useLocation } from 'react-router-dom';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -27,8 +27,8 @@ function ManagingTrainees() {
 
     const fetchCoachTrainees = async () => {
       setLoadingTrainees(true);
-      try {
-        const response = await axios.get(`${API_BASE_URL}/coaches/${user?.id}/users`);
+      try { 
+        const response = await axios.get(`${BASE_URL}/trainer/${user?.id}/users`);
         const fetchedTrainees = response.data;
         setTrainees(fetchedTrainees);
         const firstTrainee = traineeIdFromUrl
@@ -68,7 +68,7 @@ function ManagingTrainees() {
   const fetchTraineeWorkouts = async (traineeId) => {
     setLoadingExercises(true);
     try {
-      const response = await axios.get(`${API_BASE_URL}/users/${traineeId}/workouts`);
+      const response = await axios.get(`${BASE_URL}/trainee/${traineeId}/workouts`);
       const workoutsByDay = response.data;
       daysOfWeek.forEach(day => {
         if (!workoutsByDay[day]) workoutsByDay[day] = [];
@@ -101,7 +101,7 @@ function ManagingTrainees() {
 
     try {
       setLoadingExercises(true);
-      const res = await axios.post(`${API_BASE_URL}/users/${selectedTrainee.id}/workouts/${selectedDay}/exercises`, newWorkout);
+      const res = await axios.post(`${BASE_URL}/trainer/${selectedTrainee.id}/workouts/${selectedDay}/exercises`, newWorkout);
       const saved = res.data;
 
       setTraineeWorkouts(prev => ({
@@ -126,7 +126,7 @@ function ManagingTrainees() {
 
     try {
       setLoadingExercises(true);
-      await axios.delete(`${API_BASE_URL}/users/${selectedTrainee.id}/workouts/${selectedDay}/exercises/${exerciseId}`);
+      await axios.delete(`${BASE_URL}/trainer/${selectedTrainee.id}/workouts/${selectedDay}/exercises/${exerciseId}`);
       setTraineeWorkouts(prev => ({
         ...prev,
         [selectedTrainee.id]: {

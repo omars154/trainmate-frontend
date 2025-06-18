@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Profile.css';
 import { useUser } from '../utils/UserContext';
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 export default function Profile() {
   const { user } = useUser();
   const [profile, setProfile] = useState(null);
@@ -19,12 +21,12 @@ export default function Profile() {
 
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+        const res = await axios.get(`${BASE_URL}/users/${user.id}`);
         setProfile(res.data);
         setForm(res.data);
 
         if (res.data.role === 'trainee') {
-          const coachRes = await axios.get('http://localhost:5000/api/coaches');
+          const coachRes = await axios.get(`${BASE_URL}/trainee/coaches`);
           setCoaches(coachRes.data);
         }
       } catch (err) {
@@ -59,7 +61,7 @@ export default function Profile() {
     setSuccess(null);
 
     try {
-      await axios.put(`http://localhost:5000/api/users/${user.id}`, form);
+      await axios.put(`${BASE_URL}/users/${user.id}`, form);
       setProfile(form);
       setSuccess('Profile updated successfully!');
     } catch (err) {

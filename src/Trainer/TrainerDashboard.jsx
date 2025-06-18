@@ -4,7 +4,7 @@ import { useUser } from '../utils/UserContext';
 import { Link } from 'react-router-dom';
 import './TrainerDashboard.css';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 function TrainerDashboard() {
   const { user } = useUser();
@@ -15,7 +15,7 @@ function TrainerDashboard() {
     async function loadTrainees() {
       setLoading(true);
       try {
-        const response = await axios.get(`${API_BASE_URL}/coaches/${user?.id}/users`);
+        const response = await axios.get(`${BASE_URL}/trainer/${user?.id}/users`);
         setTraineeList(response.data);
       } catch (error) {
         console.log(error)

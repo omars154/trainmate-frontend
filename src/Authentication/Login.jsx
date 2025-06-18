@@ -5,16 +5,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useUser } from '../utils/UserContext';
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUser } = useUser();
   const navigate = useNavigate();
-
+  console.log(BASE_URL)
     const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/users/login', {
+      const res = await axios.post(BASE_URL + '/auth/login', {
         email,
         password
       });

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './TraineeDashboard.css';
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const TraineeDashboard = () => {
   const { user } = useUser();
   const [profile, setProfile] = useState(null);
@@ -20,10 +22,10 @@ const TraineeDashboard = () => {
 
     setLoading(true);
     try {
-      const profileRes = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+      const profileRes = await axios.get(`${BASE_URL}/users/${user.id}`);
       setProfile(profileRes.data);
 
-      const exercisesRes = await axios.get(`http://localhost:5000/api/users/${user.id}/workouts`);
+      const exercisesRes = await axios.get(`${BASE_URL}/trainee/${user.id}/workouts`);
       const allBackendExercises = exercisesRes.data;
 
       const todayExercisesRaw = allBackendExercises[today] || [];

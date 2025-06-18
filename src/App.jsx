@@ -11,7 +11,6 @@ import TrainerNav from './Trainer/TrainerNav';
 import TraineeNav from './trainee/TraineeNav';
 import './App.css';
 
-// Protected Route component
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useUser();
 
@@ -52,7 +51,7 @@ function App() {
             path="/trainer/manage-trainees"
             element={
               <ProtectedRoute allowedRoles={['trainer']}>
-                <ManagingTrainees API_BASE_URL="http://localhost:5000/api" />
+                <ManagingTrainees/>
               </ProtectedRoute>
             }
           />
