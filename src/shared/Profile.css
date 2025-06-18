@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+.profile-page-container {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-main-content {
+  flex: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 12px 32px 12px;
+  width: 100%;
+}
+
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #23223a;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.07);
+  padding: 32px 36px;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b6b7b;
+  margin-bottom: 6px;
+}
+
+.profile-display-value {
+  font-size: 1rem;
+  color: #23223a;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-input, .profile-select {
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.profile-input:focus, .profile-select:focus {
+  border-color: #4f2ee8;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
+  justify-content: flex-end;
+}
+
+.profile-save-btn, .profile-cancel-btn, .profile-edit-btn {
+  background: #4f2ee8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-save-btn:hover, .profile-edit-btn:hover {
+  background: #3b21a2;
+}
+
+.profile-cancel-btn {
+  background: #e0e0e0;
+  color: #6b6b7b;
+}
+
+.profile-cancel-btn:hover {
+  background: #c0c0c0;
+}
+
+.profile-save-btn:disabled, .profile-cancel-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.profile-message {
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 18px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.profile-error {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.profile-success {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.profile-loading {
+  text-align: center;
+  color: #4f2ee8;
+  padding: 40px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .profile-main-content {
+    padding: 24px 16px;
+  }
+  .profile-card {
+    padding: 24px;
+  }
+  .profile-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-main-content {
+    padding: 16px 10px;
+  }
+  .profile-card {
+    padding: 16px;
+  }
+  .profile-title {
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+  }
+  .profile-group {
+    gap: 12px;
+  }
+  .profile-label {
+    font-size: 0.9rem;
+  }
+  .profile-input, .profile-select, .profile-display-value {
+    font-size: 0.95rem;
+  }
+  .profile-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .profile-save-btn, .profile-cancel-btn, .profile-edit-btn {
+    width: 100%;
+    padding: 10px 16px;
+  }
+} 

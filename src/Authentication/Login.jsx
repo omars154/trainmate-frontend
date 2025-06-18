@@ -1,22 +1,48 @@
 import React, { useState } from 'react';
 import './Login.css';
 import loginImg from '../Images/loginImg.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useUser } from '../utils/UserContext';
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleLogin = async (e) => {
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+  console.log(BASE_URL)
+    const handleLogin = async (e) => {
     e.preventDefault();
-    const user = { email, password };
-
     try {
-      const res = await axios.post('http://localhost:5000/api/authentication', user);
-      console.log('Login success:', res.data);
+      const res = await axios.post(BASE_URL + '/auth/login', {
+        email,
+        password
+      });
+      const user = res.data;
+
+      if (user.error) {
+        alert('Invalid credentials');
+        return;
+      }
+
+      localStorage.setItem('user_id', user.id);
+      localStorage.setItem('role', user.role);
+      localStorage.setItem('user_email', email);
+      localStorage.setItem('user_name', user.name);
+
+      setUser({
+        id: user.id,
+        role: user.role,
+        email,
+        name: user.name,
+      });
+
+      navigate(user.role === 'trainee' ? '/trainee/dashboard' : '/trainer/dashboard');
     } catch (err) {
-      console.log(err);
+      console.log('Login error:', err);
+      alert('Login failed: User not found or server error.');
     }
   };
 
@@ -39,7 +65,6 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -49,18 +74,16 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
           <div className="login-options-row">
             <label className="login-remember">
               <input type="checkbox" name="remember" /> Remember me
             </label>
-            <a href="#" className="login-forgot">Forgot password?</a>
+            <Link to="#" className="login-forgot">Forgot password?</Link>
           </div>
-
           <button type="submit" className="login-signin-btn">Sign in</button>
         </form>
         <div className="login-signup-row">
-          <h1>Don't have an account?</h1>
+          <span>Don't have an account?</span>
           <Link to="/signup" className="login-signup-link">Sign up</Link>
         </div>
       </div>
