@@ -1,5 +1,5 @@
 import { useUser } from './utils/UserContext';
-import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './Authentication/Login';
 import Signup from './Authentication/Signup';
 import TraineeExercises from './trainee/TraineeExercises';
@@ -9,6 +9,7 @@ import TrainerDashboard from './Trainer/TrainerDashboard';
 import TraineeDashboard from './trainee/TraineeDashboard';
 import TrainerNav from './Trainer/TrainerNav';
 import TraineeNav from './trainee/TraineeNav';
+import Footer from './shared/Footer';
 import './App.css';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -22,6 +23,8 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
 function App() {
   const { user } = useUser();
+  const location = useLocation();
+  const hideFooter = location.pathname === '/login' || location.pathname === '/signup';
 
   return (
     <div className="app-container">
@@ -125,6 +128,8 @@ function App() {
           />
         </Routes>
       </main>
+
+      {!hideFooter && <Footer />}
     </div>
   );
 }
