@@ -5,6 +5,8 @@ import { useUser } from '../utils/UserContext';
 import { useLocation } from 'react-router-dom';
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
+const RAPID_API_KEY = import.meta.env.VITE_API_KEY;
+const RAPID_API_HOST = import.meta.env.VITE_API_HOST;
 
 const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -28,7 +30,7 @@ function ManagingTrainees() {
     const fetchCoachTrainees = async () => {
       setLoadingTrainees(true);
       try { 
-        const response = await axios.get(`${BASE_URL}/trainer/${user?.id}/users`);
+        const response = await axios.get(`${BASE_URL}/trainer/${user.id}/users`);
         const fetchedTrainees = response.data;
         setTrainees(fetchedTrainees);
         const firstTrainee = traineeIdFromUrl
@@ -51,8 +53,8 @@ function ManagingTrainees() {
       try {
         const response = await axios.get('https://exercisedb.p.rapidapi.com/exercises?limit=1300', {
           headers: {
-            'x-rapidapi-key': '913ede5fc5msh7af032301d58484p138028jsnf2b34e55bd24',
-            'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+            'x-rapidapi-key': RAPID_API_KEY,
+            'x-rapidapi-host': RAPID_API_HOST
           }
         });
         setAllExercises(response.data);

@@ -1,7 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="bg-dark text-light py-4 mt-auto">
       <Container>
@@ -32,6 +32,6 @@ function Footer() {
       </Container>
     </footer>
   );
-}
+};
 
-export default Footer; 
+export default Footer;

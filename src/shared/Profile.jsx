@@ -5,7 +5,7 @@ import { useUser } from '../utils/UserContext';
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
-export default function Profile() {
+function Profile() {
   const { user } = useUser();
   const [profile, setProfile] = useState(null);
   const [coaches, setCoaches] = useState([]);
@@ -17,18 +17,23 @@ export default function Profile() {
   
   useEffect(() => {
     async function fetchUser() {
-      if (!user?.id) return;
-
       setLoading(true);
       try {
-        const res = await axios.get(`${BASE_URL}/users/${user.id}`);
+        const endpoint =
+          user.role === 'trainee'
+            ? `${BASE_URL}/trainee/${user.id}`
+            : `${BASE_URL}/trainer/${user.id}`;
+
+        const res = await axios.get(endpoint);
+
         setProfile(res.data);
         setForm(res.data);
 
-        if (res.data.role === 'trainee') {
-          const coachRes = await axios.get(`${BASE_URL}/trainee/coaches`);
-          setCoaches(coachRes.data);
-        }
+      if (user.role === 'trainee') {
+        const coachRes = await axios.get(`${BASE_URL}/trainee/coaches`);
+        setCoaches(coachRes.data);
+      }
+
       } catch (err) {
         console.log(err)
       }
@@ -155,3 +160,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default Profile;

@@ -7,8 +7,8 @@ import { UserProvider } from './utils/UserContext.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
       <UserProvider>
-        <App />
-      </UserProvider>
+    <App />
+  </UserProvider>
   </BrowserRouter>
 );
 

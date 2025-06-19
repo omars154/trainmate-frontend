@@ -21,10 +21,6 @@ const Signup = () => {
       alert('Passwords do not match');
       return;
     }
-    if (!agree) {
-      alert('You must agree to the terms and privacy policy');
-      return;
-    }
     try {
       const endpoint = role === 'trainee' ? BASE_URL + '/auth/trainee/register': BASE_URL + '/auth/trainer/register';
 
