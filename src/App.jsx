@@ -1,5 +1,5 @@
 import { useUser } from './utils/UserContext';
-import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './Authentication/Login';
 import Signup from './Authentication/Signup';
 import TraineeExercises from './trainee/TraineeExercises';
@@ -9,6 +9,8 @@ import TrainerDashboard from './Trainer/TrainerDashboard';
 import TraineeDashboard from './trainee/TraineeDashboard';
 import TrainerNav from './Trainer/TrainerNav';
 import TraineeNav from './trainee/TraineeNav';
+import Footer from './shared/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -16,29 +18,24 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (!user) return <Navigate to="/login" />;
   if (allowedRoles && !allowedRoles.includes(user.role)) return <Navigate to="/" />;
-
   return children;
 };
 
 function App() {
   const { user } = useUser();
+  const location = useLocation();
+  const hideFooter = location.pathname === '/login' || location.pathname === '/signup';
 
   return (
     <div className="app-container">
-      {user && user.role === 'trainee' && (
-        <header className="app-header">
-          <TraineeNav />
-        </header>
-      )}
-      {user && user.role === 'trainer' && (
-        <header className="app-header">
-          <TrainerNav />
-        </header>
-      )}
+      {user?.role === 'trainee' && <TraineeNav />}
+      {user?.role === 'trainer' && <TrainerNav />}
+
       <main className="app-main">
         <Routes>
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
           <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
+
           <Route
             path="/trainer/dashboard"
             element={
@@ -51,7 +48,7 @@ function App() {
             path="/trainer/manage-trainees"
             element={
               <ProtectedRoute allowedRoles={['trainer']}>
-                <ManagingTrainees/>
+                <ManagingTrainees />
               </ProtectedRoute>
             }
           />
@@ -71,6 +68,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/trainee/dashboard"
             element={
@@ -95,6 +93,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/profile"
             element={
@@ -103,6 +102,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/dashboard"
             element={
@@ -113,6 +113,7 @@ function App() {
               )
             }
           />
+
           <Route
             path="/"
             element={
@@ -125,6 +126,8 @@ function App() {
           />
         </Routes>
       </main>
+
+      {!hideFooter && <Footer />}
     </div>
   );
 }

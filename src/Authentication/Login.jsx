@@ -12,7 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const { setUser } = useUser();
   const navigate = useNavigate();
-  console.log(BASE_URL)
     const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -21,11 +20,6 @@ const Login = () => {
         password
       });
       const user = res.data;
-
-      if (user.error) {
-        alert('Invalid credentials');
-        return;
-      }
 
       localStorage.setItem('user_id', user.id);
       localStorage.setItem('role', user.role);

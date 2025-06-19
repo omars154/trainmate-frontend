@@ -5,7 +5,8 @@ import axios from 'axios';
 import './TraineeDashboard.css';
 
 const BASE_URL = import.meta.env.VITE_SERVER_URL;
-
+const RAPID_API_KEY = import.meta.env.VITE_API_KEY;
+const RAPID_API_HOST = import.meta.env.VITE_API_HOST;
 const TraineeDashboard = () => {
   const { user } = useUser();
   const [profile, setProfile] = useState(null);
@@ -18,8 +19,6 @@ const TraineeDashboard = () => {
 
   useEffect(() => {
   const fetchDashboardData = async () => {
-    if (!user?.id) return;
-
     setLoading(true);
     try {
       const profileRes = await axios.get(`${BASE_URL}/users/${user.id}`);
@@ -28,11 +27,11 @@ const TraineeDashboard = () => {
       const exercisesRes = await axios.get(`${BASE_URL}/trainee/${user.id}/workouts`);
       const allBackendExercises = exercisesRes.data;
 
-      const todayExercisesRaw = allBackendExercises[today] || [];
+      const todayExercisesRaw = allBackendExercises[today];
       const exercisesDBRes = await axios.get('https://exercisedb.p.rapidapi.com/exercises?limit=1300', {
         headers: {
-          'x-rapidapi-key': '913ede5fc5msh7af032301d58484p138028jsnf2b34e55bd24',
-          'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+          'x-rapidapi-key': RAPID_API_KEY,
+          'x-rapidapi-host': RAPID_API_HOST
         }
       });
       setAllExercises(exercisesDBRes.data);

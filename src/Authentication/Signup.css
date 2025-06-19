@@ -156,7 +156,6 @@
   align-items: center;
 }
 
-<<<<<<< HEAD
 .signup-image {
   width: 100%;
   max-width: 360px;
@@ -166,8 +165,6 @@
   margin-bottom: 24px;
 }
 
-
-=======
 .signup-image-placeholder {
   width: 100%;
   max-width: 360px;
@@ -182,7 +179,6 @@
   margin-bottom: 24px;
 }
 
->>>>>>> origin/main
 .signup-image-text {
   width: 100%;
   text-align: left;
